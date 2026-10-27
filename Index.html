@@ -421,7 +421,7 @@
     </div>
 
     <div class="footer">
-      Connected to your Google Sheet
+      Preview mode
     </div>
   </div>
 
@@ -481,68 +481,98 @@
 
     /**VERIFY ACCESS CODE**/
 
-    function verifyAccess() {
-      const code =
-        document.getElementById("accessCode").value.trim();
+    // function verifyAccess() {
+    //   const code =
+    //     document.getElementById("accessCode").value.trim();
 
-      const button =
-        document.getElementById("accessButton");
+    //   const button =
+    //     document.getElementById("accessButton");
 
-      const message =
-        document.getElementById("accessMessage");
+    //   const message =
+    //     document.getElementById("accessMessage");
 
-      if (!/^\d{4}$/.test(code)) {
-        message.className = "message error";
-        message.textContent =
-          "Please enter the 4-digit access code.";
-        message.style.display = "block";
-        return;
-      }
+    //   if (!/^\d{4}$/.test(code)) {
+    //     message.className = "message error";
+    //     message.textContent =
+    //       "Please enter the 4-digit access code.";
+    //     message.style.display = "block";
+    //     return;
+    //   }
 
-      button.disabled = true;
-      button.textContent = "CHECKING...";
+    //   button.disabled = true;
+    //   button.textContent = "CHECKING...";
 
-      google.script.run
-        .withSuccessHandler(function(result) {
-          button.disabled = false;
-          button.textContent = "CONTINUE";
+    //   google.script.run
+    //     .withSuccessHandler(function(result) {
+    //       button.disabled = false;
+    //       button.textContent = "CONTINUE";
 
-          if (!result || !result.success) {
-            message.className = "message error";
-            message.textContent =
-              result && result.message
-                ? result.message
-                : "Incorrect access code.";
+    //       if (!result || !result.success) {
+    //         message.className = "message error";
+    //         message.textContent =
+    //           result && result.message
+    //             ? result.message
+    //             : "Incorrect access code.";
 
-            message.style.display = "block";
-            return;
-          }
+    //         message.style.display = "block";
+    //         return;
+    //       }
 
-          document.getElementById("accessForm").style.display =
-            "none";
+    //       document.getElementById("accessForm").style.display =
+    //         "none";
 
-          document.getElementById("loading").style.display =
-            "block";
+    //       document.getElementById("loading").style.display =
+    //         "block";
 
-          google.script.run
-            .withSuccessHandler(handleAppData)
-            .withFailureHandler(handleServerFailure)
-            .getAppData();
-        })
-        .withFailureHandler(function(error) {
-          button.disabled = false;
-          button.textContent = "CONTINUE";
+    //       google.script.run
+    //         .withSuccessHandler(handleAppData)
+    //         .withFailureHandler(handleServerFailure)
+    //         .getAppData();
+    //     })
+    //     .withFailureHandler(function(error) {
+    //       button.disabled = false;
+    //       button.textContent = "CONTINUE";
 
-          message.className = "message error";
-          message.textContent =
-            "Could not verify the access code.";
+    //       message.className = "message error";
+    //       message.textContent =
+    //         "Could not verify the access code.";
 
-          message.style.display = "block";
-          console.error(error);
-        })
-        .verifyAccessCode(code);
-    }
+    //       message.style.display = "block";
+    //       console.error(error);
+    //     })
+    //     .verifyAccessCode(code);
+    // }
 
+
+function verifyAccess() {
+  const code = document.getElementById("accessCode").value.trim();
+  const button = document.getElementById("accessButton");
+  const message = document.getElementById("accessMessage");
+
+  message.className = "message";
+  message.textContent = "";
+  message.style.display = "none";
+
+  if (!/^\d{4}$/.test(code)) {
+    message.className = "message error";
+    message.textContent = "Please enter the 4-digit access code.";
+    message.style.display = "block";
+    return;
+  }
+
+  //Demo-only access for the GitHub preview
+  if (code !== "1234") {
+    message.className = "message error";
+    message.textContent = "Incorrect access code.";
+    message.style.display = "block";
+    return;
+  }
+
+  message.className = "message error";
+  message.textContent =
+    "Access code accepted, but no spreadsheet data is connected yet. Please try again later.";
+  message.style.display = "block";
+}
 
 
 
