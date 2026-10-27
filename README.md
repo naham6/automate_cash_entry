@@ -9,7 +9,7 @@ The idea is to make it easier to record collections by selecting a date, collect
 
 ## What Used
 
-- **HTML** – to build the webpage and form
+- **HTML** – to build the webpage and form <a href="https://naham6.github.io/automate_cash_entry/Index.html" target="_blank"><ins>(**Preview**)</ins></a>
 - **CSS** – to style the page and make it responsive
 - **JavaScript** – to handle form interactions and validation
 - **Google Apps Script** – for the backend and Google Sheets integration
